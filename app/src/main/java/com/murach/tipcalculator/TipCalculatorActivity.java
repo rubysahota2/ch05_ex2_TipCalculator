@@ -2,25 +2,25 @@ package com.murach.tipcalculator;
 
 import java.text.NumberFormat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.*;
 import android.widget.TextView.OnEditorActionListener;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import androidx.appcompat.app.AppCompatActivity;
 
-public class TipCalculatorActivity extends Activity 
-implements OnEditorActionListener, OnClickListener {
+public class TipCalculatorActivity extends AppCompatActivity
+implements OnEditorActionListener, OnClickListener, AdapterView.OnItemSelectedListener {
 
+    final int ROUND_NONE = 0;
     // define variables for the widgets
     private EditText billAmountEditText;
     private TextView percentTextView;   
@@ -186,4 +186,35 @@ implements OnEditorActionListener, OnClickListener {
             break;
         }
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_tip_calculator, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.menu_settings:
+                startActivity(new Intent(getApplicationContext(), Settings.class));
+//                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+               return true;
+            case R.id.menu_about:
+                Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

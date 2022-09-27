@@ -1,3 +1,6 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -31,7 +34,7 @@
     </EditText>
 
     <!-- The tip percent -->
-    
+
     <TextView
         android:id="@+id/percentLabel"
         android:layout_width="wrap_content"
@@ -73,7 +76,7 @@
         android:textSize="20sp" />
 
     <!-- the tip amount -->
-    
+
     <TextView
         android:id="@+id/tipLabel"
         android:layout_width="wrap_content"
@@ -96,7 +99,7 @@
         android:textSize="20sp" />
 
     <!-- the total -->
-    
+
     <TextView
         android:id="@+id/totalLabel"
         android:layout_width="wrap_content"
@@ -119,7 +122,7 @@
         android:textSize="20sp" />
 
     <!-- the separator line -->
-    
+
     <View
         android:id="@+id/separatorLine"
         android:layout_alignLeft="@+id/totalLabel"
@@ -128,9 +131,9 @@
 		android:layout_height="1dp"
         android:padding="5dp"
 		android:background="@android:color/black" />
-        
+
     <!-- rounding -->
-    
+
     <TextView
         android:id="@+id/roundingLabel"
         android:layout_width="wrap_content"
@@ -170,7 +173,7 @@
     </RadioGroup>
 
     <!-- split -->
-    
+
     <TextView
         android:id="@+id/splitLabel"
         android:layout_width="wrap_content"
@@ -209,7 +212,7 @@
         android:padding="5dp"
         android:text="@string/split_amount"
         android:textSize="20sp" />
-    
+
     <!-- apply button -->
 
     <Button
@@ -221,3 +224,4 @@
         android:text="@string/apply" />
 
 </RelativeLayout>
+</ScrollView>
