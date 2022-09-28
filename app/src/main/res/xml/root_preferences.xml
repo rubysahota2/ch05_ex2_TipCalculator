@@ -1,12 +1,16 @@
 <PreferenceScreen
         xmlns:android="http://schemas.android.com/apk/res/android">
-
+<PreferenceCategory
+    android:title="TIP PERCENT"
+    android:key="pref_percent_category">
     <CheckBoxPreference
             android:key="pref_remember_percent"
             android:title="@string/remember_percent_title"
             android:summary="@string/remember_percent_summary"
-            android:defaultValue="true" />
-
+            android:defaultValue="true" /> </PreferenceCategory>
+    <PreferenceCategory
+            android:title="ROUNDING"
+            android:key="pref_rounding_category">
     <ListPreference
             android:key="pref_rounding"
             android:title="@string/rounding_title"
@@ -14,6 +18,7 @@
             android:dialogTitle="@string/rounding_title"
             android:entries="@array/rounding_keys"
             android:entryValues="@array/rounding_values"
-            android:defaultValue="@string/rounding_default" />
+            android:defaultValue="@string/rounding_default"
+            android:dependency="pref_remember_percent"/> </PreferenceCategory>
 
 </PreferenceScreen>

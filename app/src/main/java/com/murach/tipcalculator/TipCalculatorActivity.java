@@ -16,11 +16,14 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 public class TipCalculatorActivity extends AppCompatActivity
 implements OnEditorActionListener, OnClickListener, AdapterView.OnItemSelectedListener {
 
-    final int ROUND_NONE = 0;
+    private final int ROUND_NONE = 0;
+    private final int ROUND_TIP = 1;
+    private final int ROUND_TOTAL = 2;
     // define variables for the widgets
     private EditText billAmountEditText;
     private TextView percentTextView;   
@@ -37,11 +40,14 @@ implements OnEditorActionListener, OnClickListener, AdapterView.OnItemSelectedLi
     private Button   applyButton;
     
     // define the SharedPreferences object
-    private SharedPreferences savedValues;
+    private SharedPreferences pref;
     
     // define instance variables that should be saved
     private String billAmountString = "";
     private float tipPercent = .15f;
+
+    private boolean rememberTipPercent = true;
+    private int rounding = ROUND_NONE;
         
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,15 +81,17 @@ implements OnEditorActionListener, OnClickListener, AdapterView.OnItemSelectedLi
         percentUpButton.setOnClickListener(this);
         percentDownButton.setOnClickListener(this);
         applyButton.setOnClickListener(this);
-        
+        //get default values for preferences
+        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false);
+
         // get SharedPreferences object
-        savedValues = getSharedPreferences("SavedValues", MODE_PRIVATE);        
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
     }
     
     @Override
     public void onPause() {
         // save the instance variables       
-        Editor editor = savedValues.edit();        
+        Editor editor = pref.edit();
         editor.putString("billAmountString", billAmountString);
         editor.putFloat("tipPercent", tipPercent);
         editor.commit();        
@@ -96,8 +104,17 @@ implements OnEditorActionListener, OnClickListener, AdapterView.OnItemSelectedLi
         super.onResume();
         
         // get the instance variables
-        billAmountString = savedValues.getString("billAmountString", "");
-        tipPercent = savedValues.getFloat("tipPercent", 0.15f);
+        billAmountString = pref.getString("billAmountString", "");
+//        tipPercent = pref.getFloat("tipPercent", 0.15f);
+        rememberTipPercent = pref.getBoolean("pref_remember_percent", true);
+        rounding = pref.getInt("pref_rounding", 0);
+        if(rememberTipPercent){
+            tipPercent = pref.getFloat("tipPercent", 0.15f);
+        }
+        else {
+            tipPercent = 0.15f;
+        }
+
 
         // set the bill amount on its widget
         billAmountEditText.setText(billAmountString);
@@ -120,21 +137,25 @@ implements OnEditorActionListener, OnClickListener, AdapterView.OnItemSelectedLi
         
         // calculate tip and total 
         float tipAmount = 0;
-        float totalAmount = 0;        
+        float totalAmount = 0;
+        //if (rounding == ROUND_NONE)
         if (roundNoneRadioButton.isChecked()) {
             tipAmount = billAmount * tipPercent;
             totalAmount = billAmount + tipAmount;
         }
+        //(rounding == ROUND_TIP)
         else if (roundTipRadioButton.isChecked()) {
             tipAmount = StrictMath.round(billAmount * tipPercent);
             totalAmount = billAmount + tipAmount;
         }
+        ////(rounding == ROUND_TOTAL)
         else if (roundTotalRadioButton.isChecked()) {
             float tipNotRounded = billAmount * tipPercent;
             totalAmount = StrictMath.round(billAmount + tipNotRounded);
             tipAmount = totalAmount - billAmount;
         }
-        
+
+
         // split amount and show/hide split amount widgets
         int splitPosition = splitSpinner.getSelectedItemPosition();
         int split = splitPosition + 1;
