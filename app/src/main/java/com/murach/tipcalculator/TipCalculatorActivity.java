@@ -107,7 +107,7 @@ implements OnEditorActionListener, OnClickListener, AdapterView.OnItemSelectedLi
         billAmountString = pref.getString("billAmountString", "");
 //        tipPercent = pref.getFloat("tipPercent", 0.15f);
         rememberTipPercent = pref.getBoolean("pref_remember_percent", true);
-        rounding = pref.getInt("pref_rounding", 0);
+        rounding = Integer.parseInt(pref.getString("pref_rounding", "0"));
         if(rememberTipPercent){
             tipPercent = pref.getFloat("tipPercent", 0.15f);
         }
