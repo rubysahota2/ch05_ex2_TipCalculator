@@ -56,15 +56,17 @@
     <string name="rounding_title">Rounding?</string>
     <string name="rounding_summary">Sets the rounding option for the calculation.</string>
     <string-array name="rounding_keys">
-        <item >None</item>
-        <item >Tip</item>
-        <item >Total</item>
+        <item>None</item>
+        <item>Tip</item>
+        <item>Total</item>
     </string-array>
     <string-array name="rounding_values">
-        <item >0</item>
-        <item >1</item>
-        <item >2</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
     </string-array>
     <string name="rounding_default">0</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
